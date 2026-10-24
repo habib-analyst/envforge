@@ -1,0 +1,20 @@
+{
+  "baseline": {
+    "exit_code": 0,
+    "drift_items": []
+  },
+  "case_a_spec_file_edited": [
+    "spec: file changed since provision (sha256 mismatch)",
+    "api: config FEATURE_FLAG = \"on\", spec says \"off\"",
+    "api: rendered env file on disk differs from spec render"
+  ],
+  "case_b_rendered_env_file_edited": [
+    "api: rendered env file on disk differs from spec render"
+  ],
+  "case_c_worker_process_killed": [
+    "worker: process not running (pid 6917 gone or recycled)"
+  ],
+  "case_d_squatter_on_worker_port": [
+    "worker: process not running (pid 6917 gone or recycled)"
+  ]
+}

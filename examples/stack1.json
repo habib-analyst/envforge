@@ -1,0 +1,12 @@
+{
+  "name": "pr-solo",
+  "services": [
+    {
+      "name": "api",
+      "command": ["{{.Appsvc}}"],
+      "env": {"FEATURE_FLAG": "on", "TIER": "api"},
+      "health": "/health",
+      "dataDir": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "pr-pg",
+  "infra": {"redis": true, "postgres": true},
+  "services": [
+    {
+      "name": "api",
+      "command": ["{{.Appsvc}}"],
+      "env": {"FEATURE_FLAG": "on", "TIER": "api"},
+      "health": "/health",
+      "dataDir": true
+    },
+    {
+      "name": "worker",
+      "command": ["{{.Appsvc}}"],
+      "env": {"FEATURE_FLAG": "off", "TIER": "worker"},
+      "health": "/health"
+    },
+    {
+      "name": "web",
+      "command": ["{{.Appsvc}}"],
+      "env": {"FEATURE_FLAG": "on", "TIER": "web"},
+      "health": "/health"
+    }
+  ],
+  "smoke": [
+    {"service": "web", "path": "/call?svc=api", "expect": 200}
+  ]
+}

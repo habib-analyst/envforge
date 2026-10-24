@@ -1,0 +1,185 @@
+{
+  "tool": "envforge",
+  "date": "2026-10-23",
+  "host": {
+    "go": "1.23.4",
+    "cpus": 2,
+    "os": "linux",
+    "redis": "7.4.2",
+    "postgres": "16.4"
+  },
+  "tests": {
+    "command": "go test ./...",
+    "total": 10,
+    "passed": 10,
+    "packages": [
+      "spec (3)",
+      "registry (2)",
+      "procutil (4)",
+      "engine integration (1)"
+    ]
+  },
+  "provision_time": {
+    "target_full_stack_seconds": 60,
+    "stacks": {
+      "stack1_1_service": {
+        "n": 8,
+        "min_ms": 64,
+        "p50_ms": 113,
+        "p95_ms": 134,
+        "max_ms": 134,
+        "mean_ms": 94.1,
+        "samples_ms": [
+          125,
+          113,
+          123,
+          134,
+          64,
+          64,
+          66,
+          64
+        ]
+      },
+      "stack_redis_3_services": {
+        "n": 8,
+        "min_ms": 124,
+        "p50_ms": 201,
+        "p95_ms": 229,
+        "max_ms": 229,
+        "mean_ms": 178.9,
+        "samples_ms": [
+          151,
+          124,
+          127,
+          223,
+          229,
+          209,
+          167,
+          201
+        ]
+      },
+      "stackpg_redis_postgres_3_services": {
+        "n": 8,
+        "min_ms": 4726,
+        "p50_ms": 12768,
+        "p95_ms": 14081,
+        "max_ms": 14081,
+        "mean_ms": 10817.4,
+        "samples_ms": [
+          13548,
+          7023,
+          11710,
+          12768,
+          4726,
+          14081,
+          8619,
+          14064
+        ]
+      }
+    }
+  },
+  "isolation": {
+    "cross_read_violations": 0,
+    "env_b_health_latency_idle": {
+      "n": 50,
+      "p50_ms": 0.44,
+      "p95_ms": 0.81,
+      "max_ms": 1.01
+    },
+    "env_b_health_latency_while_a_hammered": {
+      "n": 50,
+      "p50_ms": 0.68,
+      "p95_ms": 7.57,
+      "max_ms": 11.24
+    },
+    "hammer_writes_to_a": 1078
+  },
+  "drift": {
+    "baseline": {
+      "exit_code": 0,
+      "drift_items": []
+    },
+    "case_a_spec_file_edited": [
+      "spec: file changed since provision (sha256 mismatch)",
+      "api: config FEATURE_FLAG = \"on\", spec says \"off\"",
+      "api: rendered env file on disk differs from spec render"
+    ],
+    "case_b_rendered_env_file_edited": [
+      "api: rendered env file on disk differs from spec render"
+    ],
+    "case_c_worker_process_killed": [
+      "worker: process not running (pid 6917 gone or recycled)"
+    ],
+    "case_d_squatter_on_worker_port": [
+      "worker: process not running (pid 6917 gone or recycled)"
+    ]
+  },
+  "chaos": {
+    "cases": [
+      {
+        "case": "kill-during-up",
+        "target_phase": "alloc",
+        "killed_at": "alloc",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "dirs",
+        "killed_at": "dirs",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "start:redis",
+        "killed_at": "start:redis",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "start:api",
+        "killed_at": "start:api",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "start:worker",
+        "killed_at": "start:worker",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "start:web",
+        "killed_at": "start:web",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "health",
+        "killed_at": "health",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-up",
+        "target_phase": "smoke",
+        "killed_at": "smoke",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-at-idle",
+        "target_phase": "ready",
+        "killed_at": "ready",
+        "leaks_after_fresh_teardown": 0
+      },
+      {
+        "case": "kill-during-teardown",
+        "target_phase": "down:wait",
+        "killed_at": "down:wait",
+        "leaks_after_fresh_teardown": 0
+      }
+    ],
+    "phases_tested": 10,
+    "phase_hit_accuracy": "10/10 (killer landed on the target phase every run)",
+    "total_leaks": 0,
+    "global_audit_after_all_cases": "clean"
+  }
+}

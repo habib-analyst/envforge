@@ -1,0 +1,2 @@
+env pr-iso-a ready in 286 ms, ports map[api:20010 redis:20001 web:20012 worker:20011]
+{"name":"pr-iso-a","ports":{"api":20010,"redis":20001,"web":20012,"worker":20011},"duration_ms":286}
